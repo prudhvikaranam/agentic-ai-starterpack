@@ -1,0 +1,114 @@
+Ollama commands
+Ollama list
+ollama ps
+ollama run model
+ollama stop model
+
+
+
+TOPIC 1
+
+We use LLM and pass required model and tool what ever we want to use.
+
+When LLM start
+
+It take the query and calls model by passing the defined tools
+LLM automatically tries to understand if any tool is available based on query,
+If tool available it considers that tool and provide the data so that we can call our api/db and get the data.
+once the data is available by api/db, we again make a call to LLM then model again takes the result and give the response in human readable format.
+
+So here model is called two times
+1) To understand the user query and to select the tool if available
+2) Once we get the result we again call the model to process that into human readable format.
+
+Can you confirm if my understanding is Correct and good to proceed to Topic 1 or missing anything to cover in Topic 1
+
+
+At high level
+
+LLM understand which tool to call
+but application code runs the method/api/db to get the data with the result given my tool
+After application gives result, we pass that to llm again to give data in human readable format
+
+
+TOPIC 2
+
+
+What I understood about topic 2 at high level is We store data ex: pdf, 
+we use embedding on the data to convert that in to vectors, 
+When user queries, even that query is embeded as vectors,
+ Now user query vector is compared with data vector and which is the best possible match it returns that data with context and user query this format and is sent to LLM to understand and transform into Natural language
+
+RAG Complete Flow
+
+Let's map the whole thing.
+
+User:
+
+What is contractor leave policy?
+R = Retrieval
+Question
+ ↓
+Embedding
+ ↓
+Similarity Search
+ ↓
+Find relevant chunks
+
+Retrieved:
+Contractors receive 10 leave days annually.
+
+
+
+A = Augmentation
+
+Build prompt:
+[
+Context:
+Contractors receive 10 leave days annually.
+Question:
+What is contractor leave policy?
+]
+
+
+Your understanding:
+"Augmentation is the process of structuring the data into a format ready to send to the LLM."
+✅ Partially correct.
+A more accurate definition would be:
+Augmentation is the process of adding retrieved context to the user's query before sending it to the LLM.
+The formatting/structuring is part of augmentation, but the key idea is the addition of external knowledge.
+
+
+
+
+G = Generation
+LLM generates:
+Contractors receive 10 leave days annually.
+
+
+Question about RAG process
+Why can't we simply store PDFs in a normal database
+and search them using SQL LIKE '%keyword%'?
+
+Why do we need embeddings and vector search?
+
+Answer
+We use embeddings and vector search because
+users often ask questions using different words
+than those present in the documents.
+
+Traditional keyword searches look for exact words.
+
+Embeddings convert text into vectors representing
+meaning.
+
+When a user asks a question, the query is also
+converted into an embedding.
+
+Vector similarity search finds the most relevant
+document chunks based on meaning rather than exact
+word matches.
+
+An additional benefit is that only the relevant
+chunks are sent to the LLM, improving performance
+and reducing token usage.
