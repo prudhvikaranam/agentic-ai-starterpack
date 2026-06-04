@@ -1,6 +1,7 @@
 Ollama commands
 Ollama list
 ollama ps
+ollama show model
 ollama run model
 ollama stop model
 
