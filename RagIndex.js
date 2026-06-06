@@ -12,7 +12,7 @@ import ollama from "ollama";
 */
 
 const content = fs.readFileSync(
-    "./RagKnowledge.txt",
+    "./storage/RagKnowledge.txt",
     "utf8"
 );
 
@@ -274,9 +274,9 @@ Answer:
 
     // console.log("\n========= FINAL ANSWER =========\n");
 
-    // console.log(
-    //     finalResponse.message.content
-    // );
+    console.log(
+        finalResponse.message.content
+    );
 }
 
 run();

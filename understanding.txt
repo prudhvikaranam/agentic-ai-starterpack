@@ -113,3 +113,12 @@ word matches.
 An additional benefit is that only the relevant
 chunks are sent to the LLM, improving performance
 and reducing token usage.
+
+
+With real time Qdrant example
+
+API Key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIiwic3ViamVjdCI6ImFwaS1rZXk6NGMxMWFhMDYtM2EyOC00NjU5LWIxMTktN2ZjMDY1MmZiZGVhIn0.jQ_qh4OiVLpFf2cpa7yMe1WxN61YmsccSgyTxTOExMg
+
+Cluster Endpoint
+https://3cb921ed-3ae9-47ba-8e34-79e71d0a5dd7.us-west-1-0.aws.cloud.qdrant.io

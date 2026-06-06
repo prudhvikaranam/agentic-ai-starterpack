@@ -1,1 +1,6 @@
 RAG stands for Retrieval Augmented Generation.
+
+Hyderabad is in India
+
+Ollama is the LLM
+
