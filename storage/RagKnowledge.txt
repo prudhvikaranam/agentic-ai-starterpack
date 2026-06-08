@@ -1,6 +1,9 @@
 RAG stands for Retrieval Augmented Generation.
 
-Hyderabad is in India
+Ness Digital Engineering is an indian company, Prudhvi works over there......
 
 Ollama is the LLM
+
+
+Prudhvi full name is Prudhvi Teja Karanam and called as Prudhvi Karanam
 
