@@ -60,14 +60,16 @@ async function ingestKnowledge() {
             "utf8"
         );
 
+
+        // console.log('******content from file:******', content);
+
     const chunks =
         content
             .split(/\r?\n\r?\n/)
-            .filter(Boolean);
+            .filter(Boolean); // this will make data into array strucutre and filter out any empty chunks
 
-    // console.log(
-    //     `Found ${chunks.length} chunks`
-    // );
+        // console.log('******content from file:******', chunks); 
+
 
     let pointId = 1;
 
@@ -80,7 +82,7 @@ async function ingestKnowledge() {
             });
 
 
-        // console.log('knowledge response after embedding:', response);
+        console.log('knowledge response after embedding:',chunk + ' -> ' + JSON.stringify(response));
         // console.log('knowledge chunk :', chunk);
 
 
@@ -113,7 +115,7 @@ async function ingestKnowledge() {
 async function askQuestion() {
 
     const userQuestion =
-        "Tell me about charminar";
+        "Tell me about Karanam";
 
     const queryEmbedding =
         await ollama.embeddings({

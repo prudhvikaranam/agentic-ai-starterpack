@@ -14,9 +14,6 @@ const client = new QdrantClient({
     apiKey: process.env.QDRANT_API_KEY
 });
 
-// =========================================
-// Create collection if it doesn't exist
-// =========================================
 
 async function createCollectionIfNotExists() {
 
@@ -55,9 +52,6 @@ async function createCollectionIfNotExists() {
     }
 }
 
-// =========================================
-// Read text from files
-// =========================================
 
 async function getTextFromFile(filePath) {
 
@@ -85,9 +79,7 @@ async function getTextFromFile(filePath) {
     return "";
 }
 
-// =========================================
-// Chunking Function
-// =========================================
+
 
 function chunkText(text, chunkSize = 1000) {
 
@@ -107,9 +99,7 @@ function chunkText(text, chunkSize = 1000) {
     return chunks;
 }
 
-// =========================================
-// Ingest all files from storage folder
-// =========================================
+
 
 async function ingestKnowledge() {
 
@@ -123,13 +113,6 @@ async function ingestKnowledge() {
     );
 
     let pointId = 1;
-
-    // Optional:
-    // clear chunks debug file
-    fs.writeFileSync(
-        "./chunks.txt",
-        ""
-    );
 
     for (const file of files) {
 
@@ -215,9 +198,6 @@ async function ingestKnowledge() {
     );
 }
 
-// =========================================
-// Ask Question
-// =========================================
 
 async function askQuestion() {
 
@@ -286,17 +266,12 @@ Answer:
             ]
         });
 
-    console.log(
-        "\n=================================="
-    );
 
     console.log(
         "FINAL ANSWER"
     );
 
-    console.log(
-        "==================================\n"
-    );
+
 
     console.log(
         finalResponse.message.content
