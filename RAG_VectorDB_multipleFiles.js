@@ -224,9 +224,16 @@ async function askQuestion() {
             {
                 vector:
                     queryEmbedding.embedding,
-                limit: 3
+                limit: 3,
+                with_vector: true
             }
         );
+
+    console.log(
+        "\nSearch results:",
+        searchResults
+    );
+
 
     const topChunks =
         searchResults.map(
