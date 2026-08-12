@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import ollama from "ollama";
 import pdf from "pdf-parse";
 import { QdrantClient } from "@qdrant/js-client-rest";
+import { OllamaEmbeddings } from "@langchain/ollama";
+
+import { QdrantVectorStore } from "@langchain/qdrant";
 
 dotenv.config();
 
@@ -309,4 +312,138 @@ async function run() {
     }
 }
 
-run();
+
+
+
+
+
+
+
+async function runLc() {
+
+
+    console.log(
+        "Creating embeddings..."
+    );
+
+    const embeddings =
+        new OllamaEmbeddings({
+            model: "nomic-embed-text"
+        });
+
+
+    console.log(
+        "Connecting to Qdrant...11111"
+    );
+
+    const vectorStore =
+        await QdrantVectorStore
+            .fromExistingCollection(
+                embeddings,
+                {
+                    url:
+                        process.env.QDRANT_URL,
+
+                    apiKey:
+                        process.env.QDRANT_API_KEY,
+
+                    collectionName:
+                        COLLECTION_NAME,
+
+                    contentPayloadKey: "text",
+                    metadataPayloadKey: "source"
+                }
+            );
+
+
+
+    console.log(
+        "Creating retriever..."
+    );
+
+    const retriever =
+        vectorStore.asRetriever({
+            k: 3
+        });
+
+
+    const userQuestion =
+        "Tell me about climate in India";
+
+
+    console.log(
+        "\nQuestion:"
+    );
+
+    console.log(
+        userQuestion
+    );
+
+
+    console.log(
+        "\nRetrieving documents..."
+    );
+
+
+    const documents =
+        await retriever.invoke(
+            userQuestion
+        );
+
+
+    console.log(
+        "\nRetrieved Documents:\n"
+    );
+
+
+    for (
+        const document of documents
+    ) {
+
+        console.log(
+            "CONTENT:", document
+        );
+
+        console.log(
+            document.pageContent
+        );
+
+
+        console.log(
+            "\nMETADATA:"
+        );
+
+        console.log(
+            document.metadata
+        );
+
+
+        console.log(
+            "\n-------------end------------\n"
+        );
+
+
+        // const points =
+        //     await client.scroll(
+        //         COLLECTION_NAME,
+        //         {
+        //             limit: 3,
+        //             with_payload: true,
+        //             with_vector: false
+        //         }
+        //     );
+
+        // console.log(
+        //     JSON.stringify(
+        //         points,
+        //         null,
+        //         2
+        //     )
+        // );
+    }
+}
+
+
+runLc();
+
+// run();
