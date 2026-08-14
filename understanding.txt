@@ -230,3 +230,31 @@ Use when you need explicit control over a stateful, multi-step workflow:
 
 The LLM can still make decisions inside the graph, but you control the structure of the workflow.
 LangChain gives you powerful components and agents. LangGraph gives you explicit orchestration over stateful workflows.
+
+
+
+
+
+
+LANGGRAPH
+│
+├── 1. Why LangGraph exists
+├── 2. Graph thinking
+├── 3. Nodes
+├── 4. Edges
+├── 5. START / END
+├── 6. State
+├── 7. State updates
+├── 8. Conditional routing
+├── 9. Loops
+├── 10. Parallel execution
+├── 11. Tool nodes
+├── 12. Agentic RAG
+├── 13. Error handling
+├── 14. Retry / fallback
+├── 15. Human-in-the-loop
+├── 16. Checkpointing
+├── 17. Persistent state
+├── 18. Subgraphs
+├── 19. Multi-agent workflows
+└── 20. Final Travel Agent
