@@ -173,3 +173,60 @@ LANGCHAIN
     ├── Stopping / iteration behavior ⬜
     ├── Agent limitations ⬜
     └── Agent vs Workflow architecture ⬜
+
+
+
+
+"Agent Mental Model:"
+Agent
+│
+├── Model
+├── Tools
+├── State
+└── Execution Loop
+
+
+
+"Chain"
+
+Use when the workflow is known:
+
+A → B → C → D
+
+
+"Agent"
+
+Use when the LLM should dynamically decide which tools/actions are needed:
+
+LLM
+ ↓
+Choose action
+ ↓
+Tool
+ ↓
+LLM
+ ↓
+Choose next action
+
+
+"LangGraph"
+
+Use when you need explicit control over a stateful, multi-step workflow:
+
+              START
+                ↓
+              Router
+             /     \
+            ↓       ↓
+          RAG     Flight
+            \       /
+             ↓     ↓
+             Compare
+                ↓
+           Human Approval
+             /       \
+            ↓         ↓
+          Continue   Stop
+
+The LLM can still make decisions inside the graph, but you control the structure of the workflow.
+LangChain gives you powerful components and agents. LangGraph gives you explicit orchestration over stateful workflows.
