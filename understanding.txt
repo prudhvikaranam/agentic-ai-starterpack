@@ -193,6 +193,12 @@ Use when the workflow is known:
 
 A → B → C → D
 
+The workflow is fixed.
+
+A → B → C → D
+
+You know exactly what happens.
+
 
 "Agent"
 
@@ -207,6 +213,23 @@ Tool
 LLM
  ↓
 Choose next action
+
+
+
+The workflow is dynamic.
+
+LLM
+ ↓
+What should I do?
+ ↓
+Tool A?
+Tool B?
+Tool C?
+ ↓
+What next?
+
+The LLM controls the route.
+
 
 
 "LangGraph"
@@ -230,6 +253,28 @@ Use when you need explicit control over a stateful, multi-step workflow:
 
 The LLM can still make decisions inside the graph, but you control the structure of the workflow.
 LangChain gives you powerful components and agents. LangGraph gives you explicit orchestration over stateful workflows.
+
+The workflow structure is explicit, but parts of the workflow can still be intelligent.
+
+          Router
+         /      \
+        ↓        ↓
+      RAG      Flight
+        \        /
+         ↓      ↓
+          Compare
+             ↓
+        Human Approval
+          /       \
+         ↓         ↓
+      Continue    Stop
+
+Here:
+
+You control the workflow structure
+The LLM can still make decisions inside that structure
+
+That's the central idea.
 
 
 
@@ -258,3 +303,282 @@ LANGGRAPH
 ├── 18. Subgraphs
 ├── 19. Multi-agent workflows
 └── 20. Final Travel Agent
+
+The major three words you need to learn first in LangGraph
+
+Almost everything in LangGraph will eventually come back to:
+
+"STATE" (Kind of Memory)
+State is the shared information carried through the workflow.
+Suppose we build a travel workflow.
+
+Our state could conceptually be:
+
+{
+    userQuestion: "",
+    flightResults: [],
+    selectedFlight: null,
+    baggagePolicy: null,
+    weather: null,
+    documents: [],
+    recommendation: null,
+    approved: false
+}
+
+Think of it as:
+
+The workflow's current memory.
+
+
+"NODE" (Takes care of maintaining and updating state)
+
+A Node performs some work on that state.
+For example:
+
+Flight Search Node might do:
+
+State
+ ↓
+Search API
+ ↓
+Update flightResults
+ ↓
+New State
+
+
+
+Another ex:
+
+Weather Node does:
+
+State
+ ↓
+Weather API
+ ↓
+Update weather
+ ↓
+New State
+
+Another: Recommendation Node does:
+
+State
+ ↓
+Analyze flight + baggage + weather + documents
+ ↓
+Update recommendation
+
+So mentally:
+
+State → Node → Updated State
+
+
+
+"EDGE" (Takes decision on the working flow, like routing to appropriate flow based on the action )
+
+An Edge determines where execution goes next.
+
+Simple:
+
+Flight Node
+    ↓
+Baggage Node
+
+Conditional:
+
+          Router
+         /      \
+        ↓        ↓
+      RAG      Weather
+
+The edge determines the route.
+
+This is very similar to what you were thinking about earlier with:
+
+"Should the workflow go to RAG or Weather?"
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------Example on all three 
+Think about:
+
+Flight Search
+ ↓
+Baggage
+ ↓
+Weather
+ ↓
+Approval
+
+What do you think these could represent in LangGraph?
+
+State?
+Nodes?
+Edges?
+
+
+State = DATA
+
+State is the information currently carried by the workflow.
+
+For our travel example:
+
+{
+    flightResults: [],
+    selectedFlight: null,
+    baggagePolicy: null,
+    weather: null,
+    approved: false
+}
+
+Think:
+
+What does the workflow know right now?
+
+So yes, the result of a flight search can be part of State:
+
+State
+{
+    flightResults: [...]
+}
+Node = WORK
+
+A Node is where something actually happens.
+
+For example:
+
+Flight Search Node
+
+does:
+
+State
+  ↓
+Call flight API
+  ↓
+Update flightResults
+
+Another:
+
+Baggage Node
+
+does:
+
+State
+  ↓
+Read selectedFlight
+  ↓
+Call baggage service
+  ↓
+Update baggagePolicy
+
+So:
+
+Node = an operation/function that reads state and produces state updates.
+
+Edge = ROUTE
+
+An Edge determines:
+
+Where should execution go next?
+
+For example:
+
+Flight Search Node
+        ↓
+Baggage Node
+
+That's an Edge.
+
+Or:
+
+                Approval
+               /        \
+            Approved    Rejected
+               ↓           ↓
+             Book        Re-plan
+
+Those branches are created through routing/conditional edges.
+
+So:
+
+Edge = the connection/routing between Nodes.
+
+Your travel example
+
+Now map it correctly:
+
+              State
+                │
+                ▼
+        ┌─────────────────┐
+        │ Flight Search   │  ← Node
+        └────────┬────────┘
+                 │
+                 │ Edge
+                 ▼
+        ┌─────────────────┐
+        │ Baggage Check   │  ← Node
+        └────────┬────────┘
+                 │
+                 │ Edge
+                 ▼
+        ┌─────────────────┐
+        │ Weather Check   │  ← Node
+        └────────┬────────┘
+                 │
+                 │ Edge
+                 ▼
+        ┌─────────────────┐
+        │ Approval        │  ← Node
+        └─────────────────┘
+
+And State might evolve like:
+
+Initial
+{
+    flightResults: [],
+    baggagePolicy: null,
+    weather: null,
+    approved: false
+}
+After Flight Search
+{
+    flightResults: [...],
+    baggagePolicy: null,
+    weather: null,
+    approved: false
+}
+After Baggage
+{
+    flightResults: [...],
+    baggagePolicy: {...},
+    weather: null,
+    approved: false
+}
+After Weather
+{
+    flightResults: [...],
+    baggagePolicy: {...},
+    weather: {...},
+    approved: false
+}
+After Approval
+{
+    flightResults: [...],
+    baggagePolicy: {...},
+    weather: {...},
+    approved: true
+}
+
+That's the mental model I want you to remember:
+
+State = data
+Node = work
+Edge = route
