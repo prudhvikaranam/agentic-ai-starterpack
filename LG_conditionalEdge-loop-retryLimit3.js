@@ -40,6 +40,11 @@ const State = Annotation.Root({
 
 const searchFlights = async (state) => {
 
+    
+    console.log(
+        `Current entire ${JSON.stringify(state)}`
+    );
+
     console.log(
         `\nSearching flights to ${state.destination}`
     );
@@ -59,7 +64,7 @@ const searchFlights = async (state) => {
 
     let flightResults = [];
 
-    if (state.retryCount >= 2) {
+    if (state.retryCount >= 100) { // mocking max retries reached
 
         flightResults = [
             {
@@ -185,9 +190,7 @@ const maxRetriesReached = async (state) => {
 // 6. BUILD GRAPH
 // ======================================================
 
-const graph =
-
-    new StateGraph(State)
+const graph =    new StateGraph(State)
 
         // ------------------------------------------
         // Nodes
@@ -284,7 +287,7 @@ const result =
 
         retryCount: 0,
 
-        maxRetries: 3,
+        maxRetries: 5,
 
         status: "",
 
