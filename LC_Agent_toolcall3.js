@@ -91,7 +91,7 @@ const agent =
         ],
 
         systemPrompt:
-            "You are a helpful assistant. Use tools when they are useful."
+            "You are a helpful assistant. Use tools when they are useful, If there are no tools that can help you, just say you don't know the answer. Be concise and accurate in your responses."
     });
 
 

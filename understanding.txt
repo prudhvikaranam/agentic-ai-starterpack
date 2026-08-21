@@ -582,3 +582,66 @@ That's the mental model I want you to remember:
 State = data
 Node = work
 Edge = route
+
+
+
+
+
+State
+    = shared workflow data
+
+Node
+    = performs work and returns state updates
+
+Edge
+    = connects workflow steps
+
+Conditional Edge
+    = chooses the next route
+
+Cycle
+    = edge back to an earlier node
+
+Parallel Branch
+    = independent nodes running from the same stage
+
+Reducer
+    = defines how multiple updates to the same state key are merged
+
+
+
+
+
+PARALLEL + REDUCER
+
+START
+ ├── Weather
+ └── Knowledge
+       ↓
+    Reducer
+       ↓
+   Synthesis
+       ↓
+      END
+
+Reducer
+→ "How do I merge multiple state updates?"
+
+
+
+
+
+TOOLNODE
+
+START
+  ↓
+ToolNode
+  ↓
+Weather Tool
+  ↓
+ToolMessage
+  ↓
+END
+
+ToolNode
+→ "How do I execute tool calls inside the graph?"
