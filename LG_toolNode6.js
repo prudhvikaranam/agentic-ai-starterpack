@@ -45,6 +45,8 @@
 // ToolNode = execute the requested tool within the graph.
 
 
+// createAgent() gives you a ready-made agent loop. LangGraph lets you design the loop yourself.
+
 import {
     StateGraph,
     START,
