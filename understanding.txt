@@ -332,6 +332,131 @@ The workflow's current memory.
 
 "NODE" (Takes care of maintaining and updating state)
 
+
+*****************## IMPORTANT CONCEPT — Definition vs Execution
+
+One important distinction in LangGraph is that defining a node is different from executing the node.
+
+### Node Definition
+
+A node is a function/Runnable that describes work that LangGraph can execute.
+
+```js
+const fallbackNode = async (state) => {
+
+    const response =
+        await model.invoke(...);
+
+    return {
+        answer: response.content
+    };
+
+};
+```
+
+At this point, `fallbackNode` has NOT executed yet.
+
+It is only the definition of the work.
+
+We then register it with LangGraph:
+
+```js
+.addNode(
+    "fallback",
+    fallbackNode
+)
+```
+
+### Node Execution
+
+The node executes only when the graph reaches that node during graph execution.
+
+```text
+Graph execution
+      ↓
+fallback node reached
+      ↓
+fallbackNode(state)
+      ↓
+model.invoke()
+      ↓
+result
+      ↓
+state update
+```
+
+### The mistake to avoid
+
+Do NOT execute the operation first and then pass its result as the node.
+
+❌ Wrong:
+
+```js
+const fallbackResponse =
+    await model.invoke(...);
+
+.addNode(
+    "fallback",
+    fallbackResponse
+);
+```
+
+`fallbackResponse` is already an AIMessage/result.
+
+LangGraph expects a Node function or Runnable.
+
+✅ Correct:
+
+```js
+const fallbackResponse = async (state) => {
+
+    const response =
+        await model.invoke(...);
+
+    return {
+        answer: response.content
+    };
+
+};
+
+.addNode(
+    "fallback",
+    fallbackResponse
+);
+```
+
+### Connection with Runnable
+
+The same idea applies to LangChain:
+
+```text
+Runnable
+    = something that CAN be executed
+
+invoke()
+    = executes it
+```
+
+Similarly:
+
+```text
+Node definition
+    = work that LangGraph CAN execute
+
+Graph.invoke()
+    = executes the workflow
+```
+
+### Memory Rule
+
+> Definition ≠ Execution
+
+Or:
+
+> Pass the operation to LangGraph, not the result of executing the operation.
+
+
+
 A Node performs some work on that state.
 For example:
 
@@ -370,6 +495,10 @@ Update recommendation
 So mentally:
 
 State → Node → Updated State
+
+
+
+
 
 
 
