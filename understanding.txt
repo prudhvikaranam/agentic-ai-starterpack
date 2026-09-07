@@ -774,3 +774,15 @@ END
 
 ToolNode
 → "How do I execute tool calls inside the graph?"
+
+
+
+
+
+
+***********************MCP concepts
+
+
+MCP Server
+=
+program exposing capabilities
