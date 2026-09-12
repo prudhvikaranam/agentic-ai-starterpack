@@ -786,3 +786,125 @@ ToolNode
 MCP Server
 =
 program exposing capabilities
+
+MCP HOST
+= The AI application / application hosting the AI experience
+
+MCP CLIENT
+= The component inside the Host that connects to MCP Servers
+
+MCP SERVER
+= A program that exposes capabilities such as Tools, Resources, Prompts
+
+
+             AI APPLICATION
+                   │
+                 HOST
+                   │
+              MCP CLIENT
+                   │
+              MCP PROTOCOL
+                   │
+              MCP SERVER
+                   │
+        ┌──────────┼──────────┐
+        ↓          ↓          ↓
+      Tool      Resource    Prompt
+        ↓
+   API / DB / Files / etc.
+The Host uses an MCP Client to communicate with an MCP Server; the Server exposes capabilities that the Host can use.
+
+
+The most important correction
+
+The MCP Client does NOT connect to the AI.
+
+The client is already inside the AI Host/application.
+
+It connects the Host to one or more MCP Servers.
+
+
+*********The MCP server exposes a capability, which may internally call an API, database, file system, or another service.
+
+
+
+analogy: Employee + Manager + IT system
+
+This analogy may help.
+
+Imagine an employee doing a task.
+
+LangChain = employee's skills
+Employee knows:
+- read information
+- reason
+- use tools
+- generate response
+
+
+LangGraph = manager/workflow
+Manager says:
+First do A
+Then B
+If B fails, retry
+If risky, ask human
+Then C
+
+
+MCP = standardized company systems
+Employee needs:
+GitHub
+HR system
+Weather
+Database
+Files
+
+MCP provides a standardized way for the AI application to interact with those capabilities.
+
+
+
+AI application
+ ↓ has
+MCP Client
+ ↓ calls
+MCP protocol
+ ↓ finds
+MCP Server
+ ↓ selects
+MCP Tool
+ ↓ executes
+function
+
+
+
+MCP Server
+program that exposes capabilities
+
+registerTool()
+register/expose a tool
+
+inputSchema
+defines what input the tool accepts
+
+Tool handler
+actual implementation
+
+serveStdio()
+exposes the MCP server over stdio
+
+stdout/stderr
+stdout → MCP protocol
+stderr → logs
+
+below is the execution model:
+
+    MCP SERVER
+
+    registerTool()
+          ↓
+    get_weather
+          ↓
+      handler
+          ↓
+   API / DB / logic
+   But nothing executes until a client requests the tool.
