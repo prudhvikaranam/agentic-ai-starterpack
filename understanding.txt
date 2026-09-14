@@ -976,3 +976,76 @@ MCP JSON-RPC communication
 stderr
    ↓
 Human/debug logs
+
+
+
+
+Transportation in MCP
+                    MCP
+                     │
+             ┌───────┴────────┐
+             │                │
+           Client            Server
+             │                │
+             └──── Transport ─┘
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+        stdio             Streamable HTTP
+          │                     │
+      local process          remote server
+
+
+
+Tool      → "Please DO something" (Like write or read the data)
+Resource  → "Please GIVE me some context/data" (Mostly for reading some thing from any where or from where dynamic parameters are passed ex: www.somthing.com/{customerID})
+
+
+An MCP Resource is data/context exposed by an MCP Server and identified by a URI.
+
+
+
+Resource
+ ├── URI
+ ├── name
+ ├── description
+ ├── MIME type
+ └── content
+
+
+
+ MCP Server
+   │
+   ├── Tools
+   │     └── actions
+   │
+   ├── Resources
+   │     └── data/context
+   │
+   └── Prompts
+         └── reusable instructions
+
+
+
+                             MCP SERVER
+                         │
+       ┌─────────────────┼─────────────────┐
+       │                 │                 │
+       ▼                 ▼                 ▼
+    TOOLS            RESOURCES          PROMPTS
+       │                 │                 │
+       ▼                 ▼                 ▼
+    ACTION             DATA           INSTRUCTIONS
+
+
+    MCP Client
+   │
+   ├── listTools()
+   ├── listResources()
+   └── listPrompts()
+
+then
+
+   callTool()
+readResource()
+getPrompt()
