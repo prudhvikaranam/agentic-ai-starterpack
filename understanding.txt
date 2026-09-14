@@ -908,3 +908,71 @@ below is the execution model:
           ↓
    API / DB / logic
    But nothing executes until a client requests the tool.
+
+
+
+
+
+   ┌─────────────────────────┐
+│       MCP CLIENT        │
+│                         │
+│       listTools()       │
+│       callTool()        │
+└────────────┬────────────┘
+             │
+          stdio
+             │
+             ▼
+┌─────────────────────────┐
+│       MCP SERVER        │
+│                         │
+│    registerTool()       │
+│          ↓              │
+│      get_weather        │
+└────────────┬────────────┘
+             │
+             ▼
+       Tool Handler
+             │
+             ▼
+      API / DB / Logic
+
+
+Your code
+    ↓
+client.listTools()/callTool()
+    ↓
+MCP SDK
+    ↓
+JSON-RPC message
+    ↓
+MCP Server
+    ↓
+JSON-RPC response
+    ↓
+MCP SDK
+    ↓
+your JavaScript result
+
+
+
+MCP
+=
+shared protocol rules
+
+SDK
+=
+convenient JavaScript implementation of those rules
+
+
+
+
+
+
+stdout
+   ↓
+MCP JSON-RPC communication
+
+stderr
+   ↓
+Human/debug logs
