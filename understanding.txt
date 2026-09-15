@@ -1049,3 +1049,20 @@ then
    callTool()
 readResource()
 getPrompt()
+
+
+
+
+Before:
+
+AI Application
+   └── owns tool
+
+
+With MCP:
+
+AI Application
+   └── MCP Client
+          ↓
+       MCP Server
+          └── owns tool
