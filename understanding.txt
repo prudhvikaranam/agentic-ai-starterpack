@@ -1066,3 +1066,127 @@ AI Application
           ↓
        MCP Server
           └── owns tool
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          ConversationBufferMemory  in LangChain?
+          windowed memory in LangChain?
+
+
+
+
+
+Question: Which is the primary reason for using a safe, deterministic function inside a LangChain tool instead of letting the LLM handle calculations directly?
+Instruction: Choose the option that best answers the question. 
+
+A.Answer A.
+It reduces API costs for Gemini
+
+B.Answer B.
+It ensures reliable and verifiable results
+
+C.Answer C.
+It makes the LLM use creative reasoning
+
+D.Answer D.
+It allows faster text generation
+
+
+ Which statements correctly distinguish among retriever strategies in RAG?
+Instruction: Choose all options that best answer the question. 
+
+A.Answer A.
+MMR (Max Marginal Relevance) ensures diversity among retrieved results
+
+B.Answer B.
+Hybrid Retrieval ignores structured data
+
+C.Answer C.
+Similarity Search is slower but always more accurate than MMR
+
+D.Answer D.
+Similarity Search retrieves passages based on embedding distance
+
+E.Answer E.
+Hybrid Retrieval blends semantic and keyword-based approaches
+
+
+Which LangChain template is best suited for maintaining conversation history in multi-turn interactions?
+Instruction: Choose the option that best answers the question. 
+
+A.Answer A.
+ToolChain
+
+B.Answer B.
+RetrievalQA
+
+C.Answer C.
+ConversationalRetrievalChain
+
+D.Answer D.
+SequentialChain
+
+E.Answer E.
+LLMChain
+
+What is the primary purpose of using TypedDict when defining state in LangGraph workflows?
+Instruction: Choose the option that best answers the question. 
+
+A.Answer A.
+To enable automatic graph visualization
+
+B.Answer B.
+To enforce conditional edges
+
+C.Answer C.
+To allow nodes to execute asynchronously
+
+D.Answer D.
+To convert lists into dictionaries
+
+E.Answer E.
+To strictly define the structure and types of state fields
+
+
+
+ In an LLM-driven routing workflow, which factor most directly determines which handler node the system routes to?
+Instruction: Choose the option that best answers the question. 
+
+A.Answer A.
+The first word of the user query
+
+B.Answer B.
+The query’s character length
+
+C.Answer C.
+The LLM-assigned category and confidence score
+
+D.Answer D.
+The number of previous workflow executions
