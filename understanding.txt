@@ -1073,12 +1073,41 @@ AI Application
 
 
 
+Error handling
+Failure	What happens
+Invalid tool arguments	isError: true
+Tool handler/business failure	isError: true
+Unknown/disabled tool	callTool() throws ProtocolError
+SDK/transport problem	callTool() can throw SDK/transport error
+
+
+
+LangGraph
+   ↓
+MCP-backed tool
+   ↓
+MCP call
+   ↓
+ ┌───────────────┐
+ │               │
+ ▼               ▼
+tool error     protocol error
+ │               │
+ ▼               ▼
+LangGraph      catch/error
+retry          handling
 
 
 
 
 
+Authentication
+    =
+"Who are you?"
 
+Authorization
+    =
+"What are you allowed to do?"
 
 
 
@@ -1190,3 +1219,5 @@ The LLM-assigned category and confidence score
 
 D.Answer D.
 The number of previous workflow executions
+
+
