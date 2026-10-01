@@ -1115,6 +1115,43 @@ Authorization
 
 
 
+LangChain
+        │
+    Agent
+        │
+LangChain Tool
+        │
+MCP Adapter
+        │
+MCP Client
+        │
+        ▼
+MCP Server
+
+
+------------------------------------------------------
+
+MultiServerMCPClient // imported from mcp-adapters show adapter will be plugged into the flow
+        │
+        ▼
+MCP Client
+        │
+        ▼
+Weather MCP Server
+        │
+        │ list tools
+        ▼
+get_weather
+        │
+        │ adapter 
+        ▼
+LangChain Tool
+
+
+
+
+
+
 
 
 
@@ -1219,5 +1256,8 @@ The LLM-assigned category and confidence score
 
 D.Answer D.
 The number of previous workflow executions
+
+
+
 
 
