@@ -1153,6 +1153,122 @@ LangChain Tool
 
 
 
+1. 
+
+What we used	Technical term	Purpose
+
+
+PDFLoader / document loaders	Document loaders	Load files into LangChain documents
+RecursiveCharacterTextSplitter	Text splitter	Divide documents into smaller chunks
+OllamaEmbeddings	Embeddings integration	Convert text into vectors
+QdrantVectorStore	Vector store integration	Store and search vectors
+asRetriever() / retriever	Retriever abstraction	Retrieve relevant documents
+ChatOllama	Chat model integration	Connect LangChain to an LLM
+PromptTemplate	Prompt template	Structure prompts
+RunnableParallel	Runnable abstraction/composition	Run multiple operations in parallel
+RunnablePassthrough	Runnable abstraction	Pass input through a pipeline
+tool()	Tool definition	Expose a function for an LLM/agent to call
+createAgent()	Agent abstraction/API	Create an agent that can use tools
+
+These are not all the same kind of thing. Some are classes, some are functions, some are methods, and some are abstractions.
+
+
+For instance:
+- OllamaEmbeddings is a class.
+- embedQuery() is a method.
+- Runnable is an abstraction.
+- invoke() is a method used to execute a runnable.
+- @langchain/ollama is a package providing LangChain integrations.
+
+
+
+
+2. How many components does LangChain provide?
+There isn't one fixed number. LangChain is an ecosystem of core abstractions plus a large collection of integrations for models, document loaders, vector stores, retrievers, tools, and more. Its integration catalog changes over time. 
+
+
+
+
+
+The best way to remember it is by category rather than memorizing every class.
+
+1. Models and prompts
+ChatOllama, PromptTemplate, ChatPromptTemplate, invoke()
+Connect to LLMs and prepare inputs.
+
+
+
+
+2. Document processing
+Loaders, RecursiveCharacterTextSplitter
+Load documents, split them into chunks, and prepare them for retrieval.
+
+
+
+
+3. Embeddings and retrieval
+OllamaEmbeddings, QdrantVectorStore, retrievers
+Convert text into vectors, store them, and retrieve relevant documents.
+
+
+
+
+4. Runnables and chains
+Runnable, .pipe(), RunnableParallel, RunnablePassthrough
+Compose individual operations into pipelines.
+
+
+
+
+5. Tools and agents
+tool(), bindTools(), createAgent()
+Enable the model to request tools and an agent to execute them.
+
+
+
+
+6. Integrations
+Ollama, OpenAI, Qdrant, other databases, APIs, and services
+Implement common interfaces for different providers and services.
+
+
+
+3. Specifically, how many text-splitting methods are there?
+
+There are multiple text splitter implementations, each designed for different content. A few examples:
+
+Text splitter	                              Best suited for
+--------------------------------------------------------------------------------
+CharacterTextSplitter   	            Splitting by a chosen separator
+RecursiveCharacterTextSplitter	        General-purpose text splitting
+TokenTextSplitter	                    Splitting based on token counts
+MarkdownTextSplitter	                Markdown documents
+HTMLHeaderTextSplitter	                Splitting HTML around heading structure
+
+These are examples, not an exhaustive count. For our JavaScript projects, the text splitter implementations are available through LangChain's text-splitter package.
+
+
+
+
+Document Loader
+      ↓
+Text Splitter
+      ↓
+Embeddings
+      ↓
+Vector Store
+      ↓
+Retriever
+      ↓
+Prompt + LLM
+      ↓
+Answer
+
+
+
+
+
+
 
 
 
